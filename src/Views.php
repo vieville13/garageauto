@@ -1,6 +1,6 @@
 <?php 
 
-namespace Root\GarageAuto\src;
+namespace Root\GarageAuto;
 
 class Views {
     private static $template_dir = './views/';
