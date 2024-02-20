@@ -1,0 +1,16 @@
+{
+    "name": "root/garageauto",
+    "autoload": {
+        "psr-4": {
+            "Root\\Garageauto\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rémi VIEVILLE",
+            "email": "r.vieville@la-boite-immo.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
