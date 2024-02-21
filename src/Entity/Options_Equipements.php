@@ -4,12 +4,11 @@ namespace Root\Garageauto\Entity;
 
 use Root\Garageauto\Model;
 
-class Users extends Model
+class Options_Equipements extends Model
 {
 
     private ?int $id;
-    private ?string $mail;
-    private ?string $mdp;
+    private ?string $nom;
 
     public function get_object_vars()
     {
@@ -29,30 +28,17 @@ class Users extends Model
         return $this;
     }
 
-    public function getMail()
+    public function getNom()
     {
-        return $this->mail;
+        return $this->nom;
     }
 
 
-    public function setMail($mail)
+    public function setNom($nom)
     {
-        $this->mail = $mail;
+        $this->nom = $nom;
 
         return $this;
     }
 
-
-    public function getMdp()
-    {
-        return $this->mdp;
-    }
-
-
-    public function setMdp($mdp)
-    {
-        $this->mdp = password_hash($mdp, PASSWORD_DEFAULT);
-
-        return $this;
-    }
 }
