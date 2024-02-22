@@ -7,7 +7,7 @@ use Root\Garageauto\Model;
 class Formulaires extends Model
 {
 
-    private ?int $id; 
+    private ?int $id;
     private ?string $mail;
     private ?string $nom;
     private ?string $prenom;
@@ -28,7 +28,7 @@ class Formulaires extends Model
 
     public function setId($id)
     {
-        $this->id = htmlspecialchars(addslashes($id));
+        $this->id = $id;
 
         return $this;
     }
@@ -104,11 +104,11 @@ class Formulaires extends Model
         return $this->idAnnonce;
     }
 
-    public function setIdAnnonce($idAnnonce){
+    public function setIdAnnonce($idAnnonce)
+    {
 
         $this->idAnnonce = $idAnnonce;
 
         return $this;
-
     }
 }

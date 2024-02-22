@@ -27,7 +27,7 @@ class Annonces extends Model
 
     public function setId($id)
     {
-        $this->id = htmlspecialchars(addslashes($id));
+        $this->id = $id;
 
         return $this;
     }
@@ -64,12 +64,12 @@ class Annonces extends Model
         return $this->annee;
     }
 
-    public function setAnnee($annee){
+    public function setAnnee($annee)
+    {
 
         $this->annee = $annee;
 
         return $this;
-
     }
 
     public function getKilometrage()
@@ -77,12 +77,12 @@ class Annonces extends Model
         return $this->kilometrage;
     }
 
-    public function setKilometrage($annee){
+    public function setKilometrage($kilometrage)
+    {
 
         $this->kilometrage = $kilometrage;
 
         return $this;
-
     }
 
     public function getIdUser()
@@ -90,11 +90,11 @@ class Annonces extends Model
         return $this->idUser;
     }
 
-    public function setIdUser($idUser){
+    public function setIdUser($idUser)
+    {
 
         $this->idUser = $idUser;
 
         return $this;
-
     }
 }

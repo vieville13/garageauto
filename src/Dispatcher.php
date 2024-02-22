@@ -2,6 +2,7 @@
 
 namespace Root\Garageauto;
 
+use Root\Garageauto\Controller\Horaires;
 use Root\Garageauto\Controller\Users;
 
 class Dispatcher
@@ -24,7 +25,10 @@ class Dispatcher
 
     public function dispatch()
     {
-        new Users();
-        
+        if (is_null($this->page) || $this->page === 'users') {
+            new Users();
+        } elseif ($this->page === 'horaires') {
+            new Horaires();
+        }
     }
 }

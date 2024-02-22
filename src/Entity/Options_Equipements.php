@@ -23,7 +23,7 @@ class Options_Equipements extends Model
 
     public function setId($id)
     {
-        $this->id = htmlspecialchars(addslashes($id));
+        $this->id = $id;
 
         return $this;
     }
@@ -40,5 +40,4 @@ class Options_Equipements extends Model
 
         return $this;
     }
-
 }

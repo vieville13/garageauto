@@ -8,8 +8,9 @@ class Users extends Model
 {
 
     private ?int $id;
-    private ?string $mail;
+    private ?string $email;
     private ?string $mdp;
+    private ?bool $admin;
 
     public function get_object_vars()
     {
@@ -22,26 +23,25 @@ class Users extends Model
     }
 
 
-    public function setId($id)
+    public function setIdUser($id)
     {
-        $this->id = htmlspecialchars(addslashes($id));
+        $this->id = $id;
 
         return $this;
     }
 
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
 
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
-
 
     public function getMdp()
     {
@@ -52,6 +52,19 @@ class Users extends Model
     public function setMdp($mdp)
     {
         $this->mdp = password_hash($mdp, PASSWORD_DEFAULT);
+
+        return $this;
+    }
+
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
 
         return $this;
     }

@@ -7,7 +7,7 @@ use Root\Garageauto\Model;
 class Temoignages extends Model
 {
 
-    private ?int $id; 
+    private ?int $id;
     private ?string $nom;
     private ?string $commentaire;
     private ?int $note;
@@ -26,7 +26,7 @@ class Temoignages extends Model
 
     public function setId($id)
     {
-        $this->id = htmlspecialchars(addslashes($id));
+        $this->id = $id;
 
         return $this;
     }
@@ -77,11 +77,11 @@ class Temoignages extends Model
         return $this->idUser;
     }
 
-    public function setIdUser($idUser){
+    public function setIdUser($idUser)
+    {
 
         $this->idUser = $idUser;
 
         return $this;
-
     }
 }

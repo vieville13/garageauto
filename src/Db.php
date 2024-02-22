@@ -1,24 +1,27 @@
 <?php
-namespace Root\Garageauto;
-use PDO;
 
-class Db extends PDO {
+namespace Root\Garageauto;
+
+use PDO;
+use PDOException;
+
+class Db extends PDO
+{
 
     private static $instance = null;
 
-	public function __construct(){
+    public function __construct()
+    {
 
-		try{
-			$pdo = parent::__construct('sqlite:'.dirname(__FILE__).'/garageauto.db');
-			// $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-			// $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // ERRMODE_WARNING | ERRMODE_EXCEPTION | ERRMODE_SILENT
-		} catch(Exception $e) {
-			echo "Impossible d'accéder à la base de données SQLite : ".$e->getMessage();
-			die();
-		}
-	}
+        try {
+            $pdo = parent::__construct('sqlite:' . dirname(__FILE__) . '/garageauto.db');
+        } catch (PDOException $e) {
+            echo "Impossible d'accéder à la base de données SQLite : " . $e->getMessage();
+            die();
+        }
+    }
 
-	public static function getInstance()
+    public static function getInstance()
     {
         if (is_null(self::$instance)) {
             self::$instance = new Db();
@@ -44,7 +47,7 @@ class Db extends PDO {
 
         $table = strtolower($this->getTableName($space));
 
-        $query = "select * from " . $table . " where id=$id";
+        $query = "select * from " . $table . " where id" . substr(ucfirst($table), 0, -1) . "=$id";
         $results = $this->query($query);
         $return = $results->fetchAll(PDO::FETCH_CLASS, $space);
         if (count($return) === 0) {
@@ -79,7 +82,7 @@ class Db extends PDO {
         $count = count($attributes) - 1;
         $i = 0;
         foreach ($attributes as $attribute => $value) {
-            if ($attribute === 'id') {
+            if ($attribute === 'id' . substr(ucfirst($table), 0, -1)) {
                 $i++;
                 continue;
             }
@@ -89,8 +92,7 @@ class Db extends PDO {
             }
             $i++;
         }
-        $sql .= ' where id=' . $attributes['id'];
-
+        $sql .= ' where id' . substr(ucfirst($table), 0, -1) . '=' . $attributes['id' . substr(ucfirst($table), 0, -1)];
         $query = $this->query($sql);
         $query->execute();
     }
@@ -146,7 +148,4 @@ class Db extends PDO {
         $count = count($tab) - 1;
         return $tab[$count];
     }
-
 }
-
-?>
