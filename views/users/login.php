@@ -1,6 +1,6 @@
 <main>
     <div class="container">
-        <h2>Connexion</h2>
+        <h2>Connexion </h2>
         <form method="POST">
             <div class="form-group">
                 <label for="email">Email</label>
