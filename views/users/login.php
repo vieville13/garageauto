@@ -8,7 +8,7 @@
             </div>
             <div class="form-group">
                 <label for="mpd">Mot de passe</label>
-                <input type="mdp" name="mdp" class="form-control" id="mdp" required>
+                <input type="password" name="mdp" class="form-control" id="mdp" required>
             </div>
             <button type="submit" class="btn btn-primary">Valider</button>
             <a href="index.php?page=users&action=add" class="btn btn-danger m-4">S'inscrire</a>
