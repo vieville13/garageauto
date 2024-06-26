@@ -68,4 +68,12 @@ class Users extends Model
 
         return $this;
     }
+    public function getIdByEmail($email) {
+        $users = $this->getAll();
+        foreach ($users as $user) {
+            if ($user->getEmail() == $email) {
+                return $user->getId();
+            }
+        }
+    }
 }

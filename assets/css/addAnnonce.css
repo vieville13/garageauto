@@ -1,0 +1,13 @@
+/* input[type=file] {
+  display: none;
+} */
+
+/* On créé un bouton en ciblant un élément dans la balise label */
+.bi-plus-circle {
+  width: 500%;
+  height: 500%; 
+}
+
+label span:hover {
+  background: #0d45a5;
+}

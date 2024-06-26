@@ -10,9 +10,10 @@ class Annonces extends Model
     private ?int $id;
     private ?int $prix;
     private ?string $image;
-    private ?int $annee;
+    private ?string $annee;
     private ?int $kilometrage;
     private ?int $idUser;
+    private  ?string $modele;
 
     public function get_object_vars()
     {
@@ -94,6 +95,17 @@ class Annonces extends Model
     {
 
         $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getModele(){
+        
+        return $this->modele;
+    }
+
+    public function setModele($modele){
+        $this->modele = $modele;
 
         return $this;
     }
