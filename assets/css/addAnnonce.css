@@ -7,6 +7,9 @@
   width: 500%;
   height: 500%; 
 }
+textarea {
+  height: auto; 
+}
 
 label span:hover {
   background: #0d45a5;

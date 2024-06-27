@@ -35,10 +35,9 @@ class Db extends PDO
 
         $table = strtolower($this->getTableName($space));
 
-        $query = "select * from " . $table;
+        $query = "select * from " . $table.";";
         $results = $this->query($query);
         return $results->fetchAll(PDO::FETCH_CLASS, $space);
-        //return $results->fetchAll();
     }
 
     public function getById($id, $objet)
@@ -127,19 +126,16 @@ class Db extends PDO
                 continue;
             }
             $col .= $attribute;
-            $val .= "'" . $value . "'";
+            $val .= '"' . $value . '"';
             if ($i < $count) {
                 $col .= ',';
                 $val .= ',';
             }
             $i++;
         }
-        $sql .= " " . $col . ') values ' . $val . ')';
-        if ($this->query($sql)) {
-            return 'bien enregistré';
-        } else {
-            return 'un problème est survenu';
-        }
+        $sql .= " " . $col . ") values " . $val . ")"    ;
+        var_dump($sql);
+        $this->query($sql);
     }
 
     private function getTableName($espace)

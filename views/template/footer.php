@@ -20,6 +20,7 @@
 
           $horaire = new Horaires();
           $horaires = $horaire->getAll();
+          var_dump($horaires);
           foreach ($horaires as $key) {
             echo '<li class="text-light">' . $key->getJour() . ' : ' . $key->getHeureMatin() . ', ' . $key->getHeureSoir() . '</li>';
           }

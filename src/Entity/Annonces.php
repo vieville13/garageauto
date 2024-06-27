@@ -3,6 +3,7 @@
 namespace Root\Garageauto\Entity;
 
 use Root\Garageauto\Model;
+use Root\Garageauto\Entity\Images;
 
 class Annonces extends Model
 {
@@ -13,7 +14,10 @@ class Annonces extends Model
     private ?string $annee;
     private ?int $kilometrage;
     private ?int $idUser;
-    private  ?string $modele;
+    private ?string $modele;
+    private bool $isDiffuse;
+    private ?string $corps;
+    private ?string $numDossier;
 
     public function get_object_vars()
     {
@@ -108,5 +112,69 @@ class Annonces extends Model
         $this->modele = $modele;
 
         return $this;
+    }
+    
+    /**
+     * Définit l'état de diffusion de l'annonce.
+     *
+     * @param bool $isDiffuse True si l'annonce est diffusée, False sinon.
+     * @return void
+     */
+    public function setIsDiffuse(?bool $isDiffuse): void
+    {
+        if ($isDiffuse === null) {
+            $this->isDiffuse = false;
+        }
+        else {    
+        $this->isDiffuse = $isDiffuse;
+        }
+    }
+    
+    
+    public function getCorps(): ?string
+    {
+        return $this->corps;
+    }
+    
+    public function setCorps(?string $corps): void
+    {
+        $this->corps = $corps;
+    }
+    
+    public function getNumDossier(): ?string
+    {
+        return $this->numDossier;
+    }
+    
+    public function setNumDossier(?string $numDossier): void
+    {
+        $this->numDossier = $numDossier;
+    }
+    /**
+     * Retourne l'état de diffusion de l'annonce.
+     *
+     * @return bool True si l'annonce est diffusée, False sinon.
+     */
+    public function isDiffuse(): bool
+    {
+        return $this->isDiffuse;
+    }
+
+    public function getIdByModeleKilometrageAnnee($modele, $kilometrage, $annee) {
+        $annonce = $this->getAll();
+        foreach ($annonce as $annonce) {
+            if ($annonce->getModele() == $modele && $annonce->getKilometrage() == $kilometrage && $annonce->getAnnee() == $annee) {
+                return $annonce->getId();
+            }
+            
+        }
+        return null;
+    }
+
+    public function getImagesbyIdAnnonce($idAnnonce)
+    {
+        $images = new Images();
+        $images = $images->getByAttribute("idAnnonce", $idAnnonce);
+        return $images;
     }
 }
