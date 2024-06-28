@@ -14,27 +14,32 @@ class Users
 
     public function __construct()
     {
-        if (isset($_GET['action'])) {
-            $this->action = $_GET['action'];
-        }
-        switch ($this->action) {
-            case 'login':
+        $this->action = isset($_GET['action']) ? $_GET['action'] : null;
+        $loggedIn = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
+        
+        switch (true) {
+            case $this->action === 'login' && !$loggedIn:
                 $this->login();
                 break;
-            case 'logout':
+            case $this->action === 'logout' && $loggedIn:
                 $this->logout();
                 break;
-            case 'logged':
+            case $this->action === 'logged' && $loggedIn:
                 $this->manage();
                 break;
-            case 'add':
+            case $this->action === 'add' && $loggedIn:
                 $this->add();
                 break;
             default:
+                if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) {    
+                $this->manage();
+                    break;
+                }
                 $this->login();
                 break;
         }
     }
+    
 
     public function login()
     {

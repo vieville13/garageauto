@@ -1,7 +1,7 @@
 <main>
     <div class="container">
         <h2>Ajouter une nouvelle annonce</h2>
-        <form method="POST" id = "formAnnonce">
+        <form method="POST" id = "formAnnonce" enctype="multipart/form-data" action = "../../index.php?page=annonce&action=manage">
             <div class="form-group">
                 <label for="numDossier">Numéros de dossier</label>
                 <input name="numDossier" type="text" class="form-control" id="numDossier" required>
@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label for="prix">Prix</label>
-                <input name="prix" type="number" class="form-control" id="prix" required>
+                <input name="prix" type="number" value ="0" class="form-control" id="prix" required>
             </div>
             <div class="form-group">
                 <label for="annee">Année</label>
@@ -20,7 +20,11 @@
             </div>
             <div class="form-group">
                 <label for="kilometrage">Kilometrages</label>
-                <input name="kilometrage" type="number" class="form-control" id="kilometrage" required>
+                <input name="kilometrage" type="number" value ="0" class="form-control" id="kilometrage" >
+            </div>
+            <div class="form-group">
+                <label for="diffuse">Diffuser cette annonce :</label>
+                    <input type="checkbox" id="diffuse" name="diffuse">
             </div>
             <div class="form-group">
                 <label for="corps">Description de l'annonce</label>
@@ -30,6 +34,7 @@
             <div id="previewImageContainer"></div>
             
                 <label for="photo">
+                <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
                 <input name="photo1" type="file" class="form-control photo"  id="photo1" accept="image/png, image/jpeg" onchange = "addFormPhoto(); previewImage();">
                 </label>
             <button type="submit" class="btn btn-primary">Valider</button>
@@ -61,6 +66,7 @@
             reader.readAsDataURL(file);
           }
         }
+        
       function addFormPhoto(){
           var numberPhoto = document.getElementsByClassName("photo").length + 1
           var lastImg =document.getElementsByClassName("photo")[document.getElementsByClassName("photo").length - 1];

@@ -46,7 +46,7 @@ class Db extends PDO
 
         $table = strtolower($this->getTableName($space));
 
-        $query = "select * from " . $table . " where id" . substr(ucfirst($table), 0, -1) . "=$id";
+        $query = "SELECT * FROM " . $table . " WHERE id = " . $id;
         $results = $this->query($query);
         $return = $results->fetchAll(PDO::FETCH_CLASS, $space);
         if (count($return) === 0) {
@@ -134,7 +134,6 @@ class Db extends PDO
             $i++;
         }
         $sql .= " " . $col . ") values " . $val . ")"    ;
-        var_dump($sql);
         $this->query($sql);
     }
 
