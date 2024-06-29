@@ -81,7 +81,7 @@ class Db extends PDO
         $count = count($attributes) - 1;
         $i = 0;
         foreach ($attributes as $attribute => $value) {
-            if ($attribute === 'id' . substr(ucfirst($table), 0, -1)) {
+            if ($attribute === 'id') {
                 $i++;
                 continue;
             }
@@ -91,7 +91,7 @@ class Db extends PDO
             }
             $i++;
         }
-        $sql .= ' where id' . substr(ucfirst($table), 0, -1) . '=' . $attributes['id' . substr(ucfirst($table), 0, -1)];
+        $sql .= ' where id' . $attributes['id'];
         $query = $this->query($sql);
         $query->execute();
     }

@@ -12,7 +12,10 @@
         <?php } ?>
     </div>
 
-    <form method="POST" id="formAnnonce" enctype="multipart/form-data" action="../../index.php?page=annonce&action=manage">
+    <form method="POST" id="formAnnonce<?php $annonce->getId() ?>" enctype="multipart/form-data" action="../../index.php?page=annonce&action=update">
+        <div class="form-group">>
+            <input type="number" class="form-control hidden" id="idAnnnonce" name="idAnnonce" value="<?php $annonce->getId() ?>">
+        </div>
         <div class="form-group">
             <label for="modele">Modèle :</label>
             <input type="text" class="form-control" id="modele" name="modele" value="<?php echo htmlspecialchars($annonce->getModele()); ?>" required>
@@ -35,7 +38,7 @@
 
         <div class="form-group">
             <label for="corps">Corps :</label>
-            <textarea class="form-control" id="corps" name="corps" required><?php echo htmlspecialchars($annonce->getCorps()); ?></textarea>
+            <textarea class="form-control" id="corps" name="corps" ><?php echo htmlspecialchars($annonce->getCorps()); ?></textarea>
         </div>
 
         <div class="form-group">

@@ -16,7 +16,7 @@
         }
         ?>
         <p class="card-text"><?= $annonce->getCorps() ?>.</p>
-        <a href="index.php?page=annonce&action=update&id=<?= $annonce->getId()?>">Voir l'annonce</a>
+        <a href="index.php?page=annonce&action=&id=<?= $annonce->getId()?>">Voir l'annonce</a>
       </div>
     </div>
   <?php } ?>
@@ -37,7 +37,7 @@
         }
         ?>
         <p class="card-text"><?= $annonce->getCorps() ?>.</p>
-        <a href="index.php?page=annonce&action=update&id=<?= $annonce->getId()?>">Voir l'annonce</a>
+        <a href="index.php?page=annonce&action=modify&id=<?= $annonce->getId()?>">Voir l'annonce</a>
       </div>
     </div>
   <?php } ?>
