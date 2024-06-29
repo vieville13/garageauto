@@ -10,13 +10,12 @@
         <h5 class="card-title"><?= $annonce->getModele() ?></h5>
         <?php
         $images = $annonce->getImagesbyIdAnnonce($annonce->getId());
-        // Affiche les images directement dans le HTML
         foreach ($images as $photo) {
           echo "<img src='{$photo->getLien()}' class='card-img-top'>";
         }
         ?>
         <p class="card-text"><?= $annonce->getCorps() ?>.</p>
-        <a href="index.php?page=annonce&action=&id=<?= $annonce->getId()?>">Voir l'annonce</a>
+        <a href="index.php?page=annonce&action=modify&id=<?= $annonce->getId()?>">Voir l'annonce</a>
       </div>
     </div>
   <?php } ?>

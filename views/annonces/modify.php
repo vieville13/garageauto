@@ -1,16 +1,19 @@
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">Modifier l'annonce</h2>
-    <div class="row">
-        <?php foreach ($images as $image) { ?>
-            <div class="col-md-3">
-                <div class="card mb-3">
-                    <input id="<?php $image->getId() ?>" type= "checkbox" class="form-check-input"/>
-                    <img src="<?php echo htmlspecialchars($image->getLien()); ?>" class="card-img-top" alt="Image <?php $annonce->getModele() ?>">
+    <form method="POST" action="../../index.php?page=annonce&action=deleteImages&id=<?php echo $annonce->getId()?>">
+        <div class="row">
+            <?php foreach ($images as $image) { ?>
+                <div class="col-md-3">
+                    <div class="card mb-3">
+                        <input id="<?php echo $image->getId(); ?>" type="checkbox" name="supprime[]" value="<?php echo $image->getId(); ?>" class="form-check-input"/>
+                        <img src="<?php echo htmlspecialchars($image->getLien()); ?>" class="card-img-top" alt="Image <?php echo htmlspecialchars($annonce->getModele()); ?>">
+                    </div>
                 </div>
-            </div>
-        <?php } ?>
-    </div>
+            <?php } ?>
+        </div>
+        <button type="submit" class="btn btn-danger mt-3">Supprimer les images sélectionnées</button>
+    </form>
 
     <form method="POST" id="formAnnonce<?php $annonce->getId() ?>" enctype="multipart/form-data" action="../../index.php?page=annonce&action=update">
         <div class="form-group">>

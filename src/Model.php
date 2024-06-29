@@ -58,7 +58,7 @@ class Model
         Db::getInstance()->save($this);
     }
 
-    public function delete()
+    public function deleteById()
     {
         Db::getInstance()->deleteById($this);
     }

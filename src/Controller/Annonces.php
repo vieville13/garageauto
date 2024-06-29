@@ -19,7 +19,9 @@ class Annonces
         $this->id = isset($_GET['id']) ? $_GET['id'] : null;
         $loggedIn = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
         switch (true) {
-            
+            case $this->action === 'acceuil':
+            $this->acceuil();
+                break;
             case $this->action === 'manage' && $loggedIn:
                 $this->manage();
                 break;
@@ -28,12 +30,16 @@ class Annonces
                 break;
             case $this->action === 'modify' && $loggedIn && isset($this->id):
             $this->modify();
+                break;
+            case $this->action === 'deleteImages' && $loggedIn && isset($this->id):
+            $this->deleteImages();
+                break;
             case $this->action === 'update' && $loggedIn:
             $this->update();
-            break;
-            // default:
-            //     $this->acceuil();
-            //     break;
+                break;
+            default:
+                $this->acceuil();
+                break;
         }
     }
 
@@ -99,21 +105,7 @@ class Annonces
     }
 
     public function modify() {
-        
-        $annonceId = isset($_GET['id']) ? $_GET['id'] : null;
-        if ($annonceId) {
-        $annonce = new Annonce();
-        $annonceDetails = $annonce->getById($annonceId);
-        $images = $annonce->getImagesbyIdAnnonce($annonceId);
-        }
-        
-        $view = new Views('annonces/modify');
-        $view->setVar('annonce', $annonceDetails);
-        $view->setVar('images', $images);
-        $view->setVar('page', $this->page);
-        $view->render();
-        
-       
+        $this->callViewModify();
     }
 
     public function update() {
@@ -148,16 +140,13 @@ class Annonces
                     array_pop($filesArray);
                 }
                 foreach ($filesArray as $file) {
-                    // Testons si le fichier a bien été envoyé et s'il n'y a pas d'erreur
                     if (isset($file) && $file['error'] == 0) {
-                        // Testons si le fichier n'est pas trop gros
                         if ($file['size'] <= 3145728) {
-                            // Testons si l'extension est autorisée
                             $infosfichier = pathinfo($file['name']);
                             $extension_upload = $infosfichier['extension'];
                             $extensions_autorisees = ['jpg', 'jpeg', 'gif', 'png'];
+                            
                             if (in_array($extension_upload, $extensions_autorisees)) {
-                                // On peut valider le fichier et le stocker définitivement
                                 move_uploaded_file($file['tmp_name'], 'upload/' . basename($file['name']));
                                 $state = "L'envoi a bien été effectué !";
                                 $image = new Images();
@@ -195,8 +184,30 @@ class Annonces
         }
         $_FILES =[];
     }
+    /**
+     * Appelle la vue pour modifier une annonce
+     *
+     * @param Annonce $annonce Une instance de la classe Annonce
+     * @param Image[] $images Un tableau d'objets Image
+     */
+    public function callViewModify()
+    {
+        $annonceId = isset($_GET['id']) ? $_GET['id'] : null;
+    
+        if ($annonceId) {
+            $annonce = new Annonce();
+            $annonce = $annonce->getById($annonceId);
+            $images = $annonce->getImagesbyIdAnnonce($annonceId);
+        }
+    
+        $view = new Views('annonces/modify');
+        $view->setVar('images', $images);
+        $view->setVar('page', $this->page);
+        $view->setVar('annonce', $annonce);
+        $view->render();
+    }
 
-    function callViewManage(Annonce $annonce) {
+    public function callViewManage(Annonce $annonce) {
         $annonces = $annonce->getAll();
         $annoncesDiffusees = [];
         $annoncesNonDiffusees = [];
@@ -215,5 +226,29 @@ class Annonces
         $view->setVar('annoncesDiffusees', $annoncesDiffusees);
         $view->setVar('annoncesNonDiffusees', $annoncesNonDiffusees);
         $view->render();
+    }
+
+    public function deleteImages()
+    {
+        if (isset($_POST['supprime'])) {
+            $imageIds = $_POST['supprime'];
+    
+            foreach ($imageIds as $imageId) {
+                $image = new Images();
+                $image->deleteById($imageId);
+            }
+        }
+        $this->callViewModify();
+    }
+
+    public function acceuil() {
+        $annonces = new Annonce();
+        $annonces =$annonces->getbyAttribute('isDiffuse', true);
+        var_dump($annonces);
+        $view = new Views('annonces/acceuil');
+            $view->setVar('annonces', $annonces);
+            $view->setVar('page', $this->page);
+            $view->render();
+        
     }
 }
