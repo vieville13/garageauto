@@ -54,7 +54,7 @@ class Horaires
         }
 
         $view = new Views('horaires/manage');
-        $view->setVar('page', 'horaires');
+        $view->setVar('page', $this->page);
         $view->render();
     }
 }

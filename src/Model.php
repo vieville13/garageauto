@@ -3,7 +3,7 @@
 namespace Root\Garageauto;
 
 
-class Model
+abstract class Model
 {
 
     public function __construct($id = NULL)

@@ -60,7 +60,7 @@
 
               image.src = imageUrl;
               image.style.width = '200px';
-              image.style.height = '300px';
+              image.style.height = 'auto';
             });
 
             reader.readAsDataURL(file);
@@ -71,9 +71,11 @@
           var numberPhoto = document.getElementsByClassName("photo").length + 1
           var lastImg =document.getElementsByClassName("photo")[document.getElementsByClassName("photo").length - 1];
           if(lastImg.value != ""){
-                       lastImg.insertAdjacentHTML ('afterend',`<div class="form-group">
-                           <input name= "photo`+numberPhoto+`"  type="file" class="form-control photo" id="photo`+numberPhoto+`" accept="image/png, image/jpeg" onchange = "addFormPhoto(); previewImage()">
-                       </div>`);
+                       lastImg.insertAdjacentHTML ('afterend',
+                        `<div class="form-group">
+                           <input name= "photo`+numberPhoto+`"  type="file" class="form-control photo" id="photo`+numberPhoto+`
+                           " accept="image/png, image/jpeg" onchange = "addFormPhoto(); previewImage()">
+                         </div>`);
               lastImg.classList.add("d-none");
           }
       }

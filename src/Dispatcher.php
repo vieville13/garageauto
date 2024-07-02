@@ -5,6 +5,7 @@ namespace Root\Garageauto;
 use Root\Garageauto\Controller\Horaires;
 use Root\Garageauto\Controller\Users;
 use Root\Garageauto\Controller\Annonces;
+use Root\Garageauto\Controller\Formulaires;
 
 
 class Dispatcher
@@ -32,6 +33,9 @@ class Dispatcher
         } 
         elseif ($this->page === 'horaires') {
             new Horaires();
+        }
+        elseif ($this->page === 'formulaire') {
+            new Formulaires();
         }
         elseif ($this->page === 'annonce') {
             new Annonces();

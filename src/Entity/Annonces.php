@@ -114,12 +114,7 @@ class Annonces extends Model
         return $this;
     }
     
-    /**
-     * Définit l'état de diffusion de l'annonce.
-     *
-     * @param bool $isDiffuse True si l'annonce est diffusée, False sinon.
-     * @return void
-     */
+
     public function setIsDiffuse(?bool $isDiffuse): void
     {
         if ($isDiffuse === null) {
@@ -150,11 +145,7 @@ class Annonces extends Model
     {
         $this->numDossier = $numDossier;
     }
-    /**
-     * Retourne l'état de diffusion de l'annonce.
-     *
-     * @return bool True si l'annonce est diffusée, False sinon.
-     */
+
     public function isDiffuse(): bool
     {
         return $this->isDiffuse;
@@ -171,10 +162,27 @@ class Annonces extends Model
         return null;
     }
 
+    public function getByNumDossier($numDossier)
+    {
+        $annonce = $this->getAll();
+        foreach ($annonce as $annonce) {
+            if ($annonce->getNumDossier() == $numDossier) {
+                return $annonce;
+            }
+        }
+        return null;
+    }
+
     public function getImagesbyIdAnnonce($idAnnonce)
     {
         $images = new Images();
         $images = $images->getByAttribute("idAnnonce", $idAnnonce);
         return $images;
+    }
+
+    public function getNumDossierbyId($idAnnonce) {
+        $annonce = $this->getById($idAnnonce);
+        return $annonce->getNumDossier();
+        
     }
 }

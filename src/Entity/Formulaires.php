@@ -3,12 +3,13 @@
 namespace Root\Garageauto\Entity;
 
 use Root\Garageauto\Model;
+use Root\Garageauto\Entity\Annonces;
 
 class Formulaires extends Model
 {
 
     private ?int $id;
-    private ?string $mail;
+    private ?string $email;
     private ?string $nom;
     private ?string $prenom;
     private ?string $telephone;
@@ -33,15 +34,15 @@ class Formulaires extends Model
         return $this;
     }
 
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
 
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
@@ -111,4 +112,10 @@ class Formulaires extends Model
 
         return $this;
     }
+
+    public function getNumDossier(int $annonceId) {
+        $annonce = new Annonces();
+        return  $annonce->getNumDossierById($annonceId);
+    }
+
 }

@@ -16,7 +16,7 @@ class Annonces
     public function __construct()
     {
         $this->action = isset($_GET['action']) ? $_GET['action'] : null;
-        $this->id = isset($_GET['id']) ? $_GET['id'] : null;
+        $this->id = isset($_GET['id']) ? (int) $_GET['id'] : null;
         $loggedIn = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
         switch (true) {
             case $this->action === 'acceuil':
@@ -54,10 +54,13 @@ class Annonces
     }
 
     public function manage()
-    {   var_dump($_POST);
+    {   
         $annonce = new Annonce();
-        $this->addPhotos($annonce);
+        if (isset($_POST['numDossier'])){
+            
         $this->formManagerAdd($annonce);
+        $this->addPhotos($annonce->getByNumDossier($annonce->getNumDossier()));
+        }
         $this->callViewManage($annonce);
         
     }
@@ -68,9 +71,9 @@ class Annonces
             $user = new Users();
             $kilometrage = isset($_POST['kilometrage']) && is_numeric($_POST['kilometrage']) ? (int)$_POST['kilometrage'] : null;
             $prix = isset($_POST['prix']) && is_numeric($_POST['prix']) ? (int)$_POST['prix'] : null;
-            $diffuse = isset($_POST['diffuse']) && $_POST['diffuse'] == 'on' ? true : false;
+            $diffuse = isset($_POST['isDiffuse']) && $_POST['isDiffuse'] == 'on' ? true : false;
             $modele = isset($_POST['modele']) ? $_POST['modele'] : null;
-            $annonce->setIdUser($user->getIdByEmail($_SESSION['email']));
+            $annonce->setIdUser($_SESSION['id']);
             $annonce->setKilometrage($kilometrage);
             $annonce->setAnnee($_POST['annee']);
             $annonce->setPrix($prix);
@@ -89,12 +92,12 @@ class Annonces
             $user = new Users();
             $kilometrage = isset($_POST['kilometrage']) && is_numeric($_POST['kilometrage']) ? (int)$_POST['kilometrage'] : null;
             $prix = isset($_POST['prix']) && is_numeric($_POST['prix']) ? (int)$_POST['prix'] : null;
-            $diffuse = $_POST['diffuse'] == 'on' ? true : false;
+            $diffuse = isset($_POST['isDiffuse']) && $_POST['isDiffuse'] == 'on' ? true : false;
             $annonce->setIdUser($user->getIdByEmail($_SESSION['email']));
             $annonce->setKilometrage($kilometrage);
             $annonce->setAnnee($_POST['annee']);
             $annonce->setPrix($prix);
-            $annonce->setModele($_POST['model']);
+            $annonce->setModele($_POST['modele']);
             $annonce->setIsDiffuse($diffuse);
             $annonce->setCorps($_POST['corps']);
             $annonce->setNumDossier($_POST['numDossier']);
@@ -109,17 +112,12 @@ class Annonces
     }
 
     public function update() {
-        var_dump($_POST);
-        $annonce = new Annonce();
-        $this->addPhotos($annonce);
-        $this->formManagerAdd($annonce);
-        $this->callViewManage($annonce);
         
-        var_dump($_POST);
         if (isset($_SESSION['logged']) && isset($_GET['id'])) {
-        $idAnnonce = $_GET['idAnnonce'];
+        $idAnnonce = (int) $_GET['id'];
         $annonce = new Annonce();
-        $annonce->getById($idAnnonce);
+        $annonce=$annonce->getById($idAnnonce);
+        var_dump($annonce);
         $this->addPhotos($annonce);
         $this->formManagerUpdate($annonce);
         $this->callViewManage($annonce);
@@ -150,11 +148,7 @@ class Annonces
                                 move_uploaded_file($file['tmp_name'], 'upload/' . basename($file['name']));
                                 $state = "L'envoi a bien été effectué !";
                                 $image = new Images();
-                                $image->setIdAnnonce($annonce->getIdByModeleKilometrageAnnee(
-                                    $annonce->getModele(),
-                                    $annonce->getKilometrage(),
-                                    $annonce->getAnnee()
-                                ));
+                                $image->setIdAnnonce($annonce->getId());
                                 $image->setLien('upload/' . $file['name']);
                                 $image->setIsMiseEnAvant(false);
                                 $image->save();
@@ -235,6 +229,7 @@ class Annonces
     
             foreach ($imageIds as $imageId) {
                 $image = new Images();
+                $image= $image->getById($imageId);
                 $image->deleteById($imageId);
             }
         }
@@ -244,7 +239,6 @@ class Annonces
     public function acceuil() {
         $annonces = new Annonce();
         $annonces =$annonces->getbyAttribute('isDiffuse', true);
-        var_dump($annonces);
         $view = new Views('annonces/acceuil');
             $view->setVar('annonces', $annonces);
             $view->setVar('page', $this->page);

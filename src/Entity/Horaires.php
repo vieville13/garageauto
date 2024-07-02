@@ -7,7 +7,7 @@ use Root\Garageauto\Model;
 class Horaires extends Model
 {
 
-    private ?int $idHoraire;
+    private ?int $id;
     private ?string $jour;
     private ?string $heureMatin;
     private ?string $heureSoir;
@@ -20,13 +20,13 @@ class Horaires extends Model
 
     public function getId()
     {
-        return $this->idHoraire;
+        return $this->id;
     }
 
 
-    public function setIdHoraire($idHoraire)
+    public function setId($id)
     {
-        $this->idHoraire = $idHoraire;
+        $this->id = $id;
 
         return $this;
     }

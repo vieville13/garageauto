@@ -1,6 +1,6 @@
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">Modifier l'annonce</h2>
+    <h2 class="mb-4">Modifier l'annonce <?php $annonce->getNumDossier()?></h2>
     <form method="POST" action="../../index.php?page=annonce&action=deleteImages&id=<?php echo $annonce->getId()?>">
         <div class="row">
             <?php foreach ($images as $image) { ?>
@@ -12,13 +12,17 @@
                 </div>
             <?php } ?>
         </div>
-        <button type="submit" class="btn btn-danger mt-3">Supprimer les images sélectionnées</button>
+        <?php if (isset($images) && $images !== []) { ?>
+        <button type="submit" class="btn btn-primary mt-3">Supprimer les images sélectionnées</button>
+        <?php } ?>
     </form>
 
-    <form method="POST" id="formAnnonce<?php $annonce->getId() ?>" enctype="multipart/form-data" action="../../index.php?page=annonce&action=update">
-        <div class="form-group">>
-            <input type="number" class="form-control hidden" id="idAnnnonce" name="idAnnonce" value="<?php $annonce->getId() ?>">
+    <form method="POST" id="formAnnonce<?php $annonce->getId() ?>" enctype="multipart/form-data" action="../../index.php?page=annonce&action=update&id=<?php echo $annonce->getId() ?>" >
+        <div class="form-group">
+            <label for="numDossier">Numéro de Dossier :</label>
+            <input type="text" class="form-control" id="numDossier" name="numDossier" value="<?php echo htmlspecialchars($annonce->getNumDossier()); ?>" required>
         </div>
+        
         <div class="form-group">
             <label for="modele">Modèle :</label>
             <input type="text" class="form-control" id="modele" name="modele" value="<?php echo htmlspecialchars($annonce->getModele()); ?>" required>
@@ -42,11 +46,6 @@
         <div class="form-group">
             <label for="corps">Corps :</label>
             <textarea class="form-control" id="corps" name="corps" ><?php echo htmlspecialchars($annonce->getCorps()); ?></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="numDossier">Numéro de Dossier :</label>
-            <input type="text" class="form-control" id="numDossier" name="numDossier" value="<?php echo htmlspecialchars($annonce->getNumDossier()); ?>" required>
         </div>
 
         <div class="form-check">
@@ -80,7 +79,7 @@
 
                     image.src = imageUrl;
                     image.style.width = '200px';
-                    image.style.height = '300px';
+                    image.style.height = 'auto';
                 });
 
                 reader.readAsDataURL(file);

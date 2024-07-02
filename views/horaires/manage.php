@@ -15,7 +15,6 @@
 
                                     $horaire = new Horaires;
                                     $horaires = $horaire->getAll();
-                                    var_dump($horaires);
 
                                     foreach ($horaires as $key => $value) {
                                         echo '<option value="' . $value->jour . '">' . $value->getJour();
