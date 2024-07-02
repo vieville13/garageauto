@@ -26,9 +26,12 @@
                       <strong>Prix:</strong> <?php echo htmlspecialchars($annonce->getPrix()); ?> €<br>
                       <strong>Description:</strong> <?php echo nl2br(htmlspecialchars($annonce->getCorps())); ?>
                   </p>
-                  <div class="mt-auto">
+                  <div class="mt-4">
                       <a href="index.php?page=annonce&action=modify&id=<?php echo $annonce->getId(); ?>" class="btn btn-primary btn-block">Voir l'annonce</a>
                   </div>
+                  <div class="mt-4">
+                        <a href="index.php?page=annonce&action=delete&id=<?php echo $annonce->getId(); ?>" class="btn btn-primary btn-block">Supprimer l'annonce</a>
+                    </div>
               </div>
           </div>
       </div>
@@ -61,6 +64,10 @@
                       <div class="mt-auto">
                           <a href="index.php?page=annonce&action=modify&id=<?php echo $annonce->getId(); ?>" class="btn btn-primary btn-block">Voir l'annonce</a>
                       </div>
+                      <div class="mt-4">
+                                  <a href="index.php?page=annonce&action=delete&id=<?php echo $annonce->getId(); ?>" class="btn btn-primary btn-block">Supprimer l'annonce</a>
+                              </div>
+                        </div>
                   </div>
               </div>
           </div>

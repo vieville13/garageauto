@@ -31,6 +31,9 @@ class Annonces
             case $this->action === 'modify' && $loggedIn && isset($this->id):
             $this->modify();
                 break;
+            case $this->action === 'delete' && $loggedIn && isset($this->id):
+            $this->delete();
+                break;
             case $this->action === 'deleteImages' && $loggedIn && isset($this->id):
             $this->deleteImages();
                 break;
@@ -117,7 +120,6 @@ class Annonces
         $idAnnonce = (int) $_GET['id'];
         $annonce = new Annonce();
         $annonce=$annonce->getById($idAnnonce);
-        var_dump($annonce);
         $this->addPhotos($annonce);
         $this->formManagerUpdate($annonce);
         $this->callViewManage($annonce);
@@ -244,5 +246,15 @@ class Annonces
             $view->setVar('page', $this->page);
             $view->render();
         
+    }
+
+    public function delete() {
+        if(isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $annonce = new Annonce();
+            $annonce = $annonce->getById($id);
+            $annonce->deletebyId();
+        }
+            $this->manage();
     }
 }

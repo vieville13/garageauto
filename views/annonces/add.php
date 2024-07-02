@@ -7,8 +7,8 @@
                 <input name="numDossier" type="text" class="form-control" id="numDossier" required>
             </div>
             <div class="form-group">
-                <label for="model">Modèle</label>
-                <input name="model" type="text" class="form-control" id="model">
+                <label for="modele">Modèle</label>
+                <input name="modele" type="text" class="form-control" id="modele">
             </div>
             <div class="form-group">
                 <label for="prix">Prix</label>
@@ -23,8 +23,8 @@
                 <input name="kilometrage" type="number" value ="0" class="form-control" id="kilometrage" >
             </div>
             <div class="form-group">
-                <label for="diffuse">Diffuser cette annonce :</label>
-                    <input type="checkbox" id="diffuse" name="diffuse">
+                <label for="isDiffuse">Diffuser cette annonce :</label>
+                    <input type="checkbox" id="isDiffuse" name="isDiffuse">
             </div>
             <div class="form-group">
                 <label for="corps">Description de l'annonce</label>

@@ -16,6 +16,7 @@ class Users
     {
         $this->action = isset($_GET['action']) ? $_GET['action'] : null;
         $loggedIn = isset($_SESSION['logged']) ? $_SESSION['logged'] : false;
+        $isAdmin = isset($_SESSION['admin']) ? (bool)$_SESSION['admin'] : false;
         
         switch (true) {
             case $this->action === 'login' && !$loggedIn:
@@ -27,9 +28,12 @@ class Users
             case $this->action === 'logged' && $loggedIn:
                 $this->manage();
                 break;
-            case $this->action === 'add' && $loggedIn:
+            case $this->action === 'add' && $loggedIn && $isAdmin:
                 $this->add();
                 break;
+            case $this->action === 'delete' && $loggedIn && $isAdmin:
+                $this->delete();
+            break;
             default:
                 if (isset($_SESSION['logged']) && $_SESSION['logged'] === true) {    
                 $this->manage();
@@ -47,7 +51,6 @@ class Users
 
             $user = new User();
             $users = $user->getAll();
-            var_dump($users);
             if (count($_POST) !== 0) {
                 if (isset($_POST['email'])) {
 
@@ -68,15 +71,13 @@ class Users
                         $_SESSION['mdp'] = $user->getMdp();
                         $_SESSION['admin'] = $user->getAdmin();
                         $error = false;
-                        var_dump($_SESSION);
                         $this->manage();
                         exit;
                     }
                 }
                 if ($error === true) {
                     echo "Mauvais mot de passe ou email";
-                    var_dump($_SESSION);
-                    var_dump($_POST);
+                
                 }
             }
             $view = new Views('users/login');
@@ -90,7 +91,6 @@ class Users
         if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
             header("Location: index.php?page=users&action=login");
         }
-        // var_dump($_SESSION);
         $view = new Views('users/manage');
         $view->setVar('page', $this->page);
         $view->render();
@@ -130,7 +130,6 @@ class Users
                     $_SESSION['email'] = $email;
                     $_SESSION['id'] = $newUser->id;
                     $_SESSION['mdp'] = $newUser->mdp;
-                    // var_dump($_SESSION);
                     $this->manage();
                     exit;
                 }
@@ -150,6 +149,25 @@ class Users
         $view = new Views('users/logout');
         $view->setVar('page', $this->page);
         $_SESSION = [];
+        $view->render();
+    }
+
+    public function delete ()
+    {    var_dump($_SESSION);
+        if (isset($_SESSION['logged']) && $_SESSION['admin'] == true) {
+            $user = new User();
+            $users = $user->getAll();
+            if (count($_POST) !== 0) {;
+                $id = $_POST['id'];
+                $user = new User();
+                $user->delete($id);
+                exit;
+            }
+        } else header("Location: index.php?page=users&action=logged");
+
+        $view = new Views('users/delete');
+        $view->setVar('users', $users);
+        $view->setVar('page', $this->page);
         $view->render();
     }
 }

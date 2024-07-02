@@ -28,8 +28,8 @@ class Dispatcher
 
     public function dispatch()
     {
-        if (is_null($this->page) || $this->page === 'users') {
-            new Users();
+        if (is_null($this->page) || $this->page === 'annonce') {
+            new Annonces();
         } 
         elseif ($this->page === 'horaires') {
             new Horaires();
@@ -37,8 +37,8 @@ class Dispatcher
         elseif ($this->page === 'formulaire') {
             new Formulaires();
         }
-        elseif ($this->page === 'annonce') {
-            new Annonces();
+        elseif ($this->page === 'users') {
+            new Users();
         }
     }
 }
